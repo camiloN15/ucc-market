@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCCMARKET - Tu tienda de tecnología</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="carrito.js" defer></script>
+    <script src="productos.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="Logo.png" alt="UCC MARKET" id="logo-img">
+                <span class="logo-text">UCCMARKET</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar productos...">
+                <button>Buscar</button>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="active">Inicio</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Productos</a>
+                    <div class="dropdown-content">
+                        <a href="laptops.html">Laptops</a>
+                        <a href="perifericos.html">Periféricos</a>
+                        <a href="monitores.html">Monitores</a>
+                    </div>
+                </div>
+                <a href="contacto.html">Contacto</a>
+                <span id="userStatus" class="user-status"></span>
+                <a href="login.html">Login</a>
+                <a href="carrito.html" class="cart-icon">🛒</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="promo-banner">
+        <img src="https://cdn.sanity.io/images/9imynjjp/production/5d430e10f09e3369a819c02e4eb705bf2c309c19-8000x1837.webp?auto=format&h=236&aspect=true" alt="Ofertas especiales" class="promo-image">
+    </div>
+
+    <main>
+        <section class="featured-products">
+            <h2>Productos Destacados</h2>
+            <div class="product-grid">
+                <!-- Laptop Product -->
+                <div class="product-card">
+                    <a href="producto.html?id=laptop1" class="product-link">
+                        <img src="https://dlcdnwebimgs.asus.com/gain/480f0742-006b-49f5-b37b-be273dd6a2c0/" alt="Laptop Gaming">
+                        <h3>Laptop Gaming ASUS</h3>
+                        <p class="price">$ 7.592.900</p>
+                    </a>
+                    <button onclick="addToCart('laptop1', 'Laptop Gaming ASUS', 7592900, this.parentElement.querySelector('img').src)" class="add-to-cart">🛒 Agregar al carrito</button>
+                </div>
+
+                <!-- Headphones Product -->
+                <div class="product-card">
+                    <a href="producto.html?id=headphones1" class="product-link">
+                        <img src="https://exitocol.vtexassets.com/arquivos/ids/24258217/diadema-gamer-rgb-auriculares-con-microfono-usb-50mm-pc-mac.jpg?v=638603722155500000" alt="Auriculares Gaming">
+                        <h3>Auriculares Gaming RGB</h3>
+                        <p class="price">$ 56.900</p>
+                    </a>
+                    <button onclick="addToCart('headphones1', 'Auriculares Gaming RGB', 56900, this.parentElement.querySelector('img').src)" class="add-to-cart">🛒 Agregar al carrito</button>
+                </div>
+
+                <!-- Gaming Chair Product -->
+                <div class="product-card">
+                    <a href="producto.html?id=chair1" class="product-link">
+                        <img src="https://sumerlabs.com/default/image-tool-lambda?new-width=100&new-height=100&new-quality=80&url-image=https%3A%2F%2Fsumerlabs.com%2Fsumer-app-90b8f.appspot.com%2Fproduct_photos%252F506a6b55e496e09e85b7ff70904499d7%252F68b7cee0-3290-11ee-8b4f-055b2160f8cb%3Falt%3Dmedia%26token%3D49619453-1b78-4398-b04e-e658c695524f" alt="Silla Gaming">
+                        <h3>Silla Gaming Pro</h3>
+                        <p class="price">$ 1.499.000</p>
+                    </a>
+                    <button onclick="addToCart('chair1', 'Silla Gaming Pro', 1499000, this.parentElement.querySelector('img').src)" class="add-to-cart">🛒 Agregar al carrito</button>
+                </div>
+
+                <!-- Monitor Product -->
+                <div class="product-card">
+                    <a href="producto.html?id=monitor1" class="product-link">
+                        <img src="https://gamerscolombia.syg.com.co/img/Monitor-ASUS-Curvo-TUF-Gaming-VG24VQ-236-pulgadas-Full-HD-144Hz-FreeSync-1ms-MPRT/img_5382__1613083792.png" alt="Monitor Gaming">
+                        <h3>Monitor Gaming 144Hz</h3>
+                        <p class="price">$ 1.421.337</p>
+                    </a>
+                    <button onclick="addToCart('monitor1', 'Monitor Gaming 144Hz', 1421337, this.parentElement.querySelector('img').src)" class="add-to-cart">🛒 Agregar al carrito</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="categories">
+            <h2>Categorías</h2>
+            <div class="category-grid">
+                <a href="laptops.html" class="category-card">
+                    <img src="https://alltechnologycs.com.ec/wp-content/uploads/2023/10/HP-LAPTOP-15-FC0012LABCD-150x150.jpg" alt="Laptops">
+                    <h3>Laptops</h3>
+                </a>
+                <a href="perifericos.html" class="category-card">
+                    <img src="https://thumb.pccomponentes.com/w-150-150/articles/1097/10971963/1691-vibox-v-120-gaming-amd-ryzen-5-16gb-1tb-nvme-rtx-5060-ti-monitor-y-perifericos.jpg" alt="Periféricos">
+                    <h3>Periféricos</h3>
+                </a>
+                <a href="monitores.html" class="category-card">
+                    <img src="https://nanotech-market.com/wp-content/uploads/2025/10/NANOTECH-PRODUCT-2025-10-16T151745.410-150x150.png" alt="Monitores">
+                    <h3>Monitores</h3>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Acerca de nosotros</h3>
+                <p>Tu tienda de confianza en tecnología y gaming</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul>
+                    <li><a href="#ayuda">Ayuda</a></li>
+                    <li><a href="#envios">Envíos</a></li>
+                    <li><a href="#devoluciones">Devoluciones</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>Email: info@uccmarket.com</p>
+                <p>Teléfono: (123) 456-7890</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 UCCMARKET. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="carrito.js"></script>
+    <script>
+    (function(){
+        var statusEl = document.getElementById('userStatus');
+        var authLink = document.querySelector('.nav-links a[href="login.html"]');
+        try {
+            var user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (statusEl) {
+                var text = user ? 'Sesión: ' + (user.name || user.email) : '';
+                statusEl.textContent = text;
+                if (user && user.isAdmin) {
+                    statusEl.style.cursor = 'pointer';
+                    statusEl.title = 'Ir al panel de administración';
+                    statusEl.addEventListener('click', function(){ window.location.href = 'admin.html'; });
+                }
+            }
+            if (authLink) {
+                if (user) {
+                    authLink.textContent = 'Salir';
+                    authLink.addEventListener('click', function(e){
+                        e.preventDefault();
+                        localStorage.removeItem('currentUser');
+                        window.location.href = 'login.html';
+                    });
+                } else {
+                    authLink.textContent = 'Login';
+                }
+            }
+        } catch(e) {}
+    })();
+    </script>
+    <script>
+        // Inicializar el carrito al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Actualizar el contador del carrito
+            if (typeof updateCartCounter === 'function') updateCartCounter();
+        });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      var container = document.querySelector('.featured-products .product-grid');
+      if (!container) return;
+      var db = JSON.parse(localStorage.getItem('productosDB_v1')||'[]');
+      if (!db.length && typeof productos === 'object') {
+        try {
+          db = Object.entries(productos).map(function(pair){ var id=pair[0], p=pair[1]; return Object.assign({id:id}, p); });
+          localStorage.setItem('productosDB_v1', JSON.stringify(db));
+        } catch(e){}
+      }
+      container.innerHTML = '';
+      db.slice(0,6).forEach(function(p){
+        var card = document.createElement('div');
+        card.className = 'product-card';
+        var img = (p.images && p.images[0]) || '';
+        card.innerHTML = '<a href="producto.html?id='+p.id+'" class="product-link">'
+          + '<img src="'+img+'" alt="'+(p.name||'')+'">'
+          + '<h3>'+ (p.name||'') +'</h3>'
+          + '<p class="price">$ '+ Number(p.price||0).toLocaleString('es-CO') +'</p>'
+          + '</a>'
+          + '<button class="add-to-cart">🛒 Agregar al carrito</button>';
+        container.appendChild(card);
+        var btn = card.querySelector('.add-to-cart');
+        if (btn) btn.addEventListener('click', function(){
+          if (typeof addToCart === 'function') addToCart(p.id, p.name, p.price, img, 1);
+        });
+      });
+    });
+    </script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAOs24mIo31-o4HkeNeeIDfp9gJKh9Gxx0",
+    authDomain: "uccmarket-ef895.firebaseapp.com",
+    projectId: "uccmarket-ef895",
+    storageBucket: "uccmarket-ef895.firebasestorage.app",
+    messagingSenderId: "581019789602",
+    appId: "1:581019789602:web:9b34f707c9e0ca65599d7b",
+    measurementId: "G-CSHFQ7N0R1"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+</body>
+</html>

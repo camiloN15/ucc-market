@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCCMARKET - Detalles del Producto</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="Logo.png" alt="UCC MARKET" id="logo-img">
+                <span class="logo-text">UCCMARKET</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar productos...">
+                <button>Buscar</button>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Inicio</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Productos</a>
+                    <div class="dropdown-content">
+                        <a href="laptops.html">Laptops</a>
+                        <a href="perifericos.html">Periféricos</a>
+                        <a href="monitores.html">Monitores</a>
+                    </div>
+                </div>
+                <a href="contacto.html">Contacto</a>
+                <span id="userStatus" class="user-status"></span>
+                <a href="login.html">Login</a>
+                <a href="carrito.html" class="cart-icon">🛒</a>
+            </div>
+        </nav>
+    </header>
+
+    <script>
+    (function(){
+        var statusEl = document.getElementById('userStatus');
+        var authLink = document.querySelector('.nav-links a[href="login.html"]');
+        try {
+            var user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (statusEl) {
+                if (user) {
+                    statusEl.textContent = 'Sesión: ' + (user.name || user.email);
+                    if (user.isAdmin) {
+                        statusEl.style.cursor = 'pointer';
+                        statusEl.title = 'Ir al panel de administración';
+                        statusEl.addEventListener('click', function(){ window.location.href = 'admin.html'; });
+                    }
+                } else {
+                    statusEl.textContent = '';
+                }
+            }
+            if (authLink) {
+                if (user) {
+                    authLink.textContent = 'Salir';
+                    authLink.addEventListener('click', function(e){
+                        e.preventDefault();
+                        localStorage.removeItem('currentUser');
+                        window.location.href = 'login.html';
+                    });
+                } else {
+                    authLink.textContent = 'Login';
+                }
+            }
+        } catch(e) {}
+    })();
+    </script>
+
+    <main>
+        <section class="product-details">
+            <div class="product-content">
+                <div class="product-gallery">
+                    <div class="main-image">
+                        <img id="productImage" src="" alt="Producto">
+                    </div>
+                    <div class="thumbnail-list" id="thumbnailList">
+                        <!-- Las miniaturas se agregarán dinámicamente -->
+                    </div>
+                </div>
+                <div class="product-info">
+                    <h1 id="productName"></h1>
+                    <p class="product-price" id="productPrice"></p>
+                    <div class="product-description" id="productDescription">
+                        <!-- La descripción se agregará dinámicamente -->
+                    </div>
+                    <div class="product-specs">
+                        <h2>Características del Producto</h2>
+                        <table class="specs-table" id="specsTable">
+                            <!-- Las especificaciones se agregarán dinámicamente -->
+                        </table>
+                    </div>
+                    <div class="purchase-options">
+                        <div class="quantity-selector">
+                            <button onclick="decrementQuantity()">-</button>
+                            <input type="number" id="quantity" value="1" min="1">
+                            <button onclick="incrementQuantity()">+</button>
+                        </div>
+                        <button id="addToCartButton" class="add-to-cart-large">🛒 Agregar al Carrito</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Acerca de nosotros</h3>
+                <p>Tu tienda de confianza en tecnología y gaming</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul>
+                    <li><a href="#ayuda">Ayuda</a></li>
+                    <li><a href="#envios">Envíos</a></li>
+                    <li><a href="#devoluciones">Devoluciones</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>Email: info@uccmarket.com</p>
+                <p>Teléfono: (123) 456-7890</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 UCCMARKET. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="carrito.js"></script>
+    <script src="productos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Obtener el ID del producto de la URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('id');
+            
+            // Si no hay ID de producto, redirigir a la página de inicio
+            if (!productId) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Buscar el producto primero en la DB del admin (localStorage) y luego en productos.js
+            let db = [];
+            try { db = JSON.parse(localStorage.getItem('productosDB_v1') || '[]'); } catch(e) {}
+            let product = db.find(p => p.id === productId);
+            if (!product && typeof productos === 'object') {
+                const legacy = productos[productId];
+                if (legacy) product = Object.assign({ id: productId }, legacy);
+            }
+            if (!product) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Actualizar la imagen principal y el título de la página
+            document.getElementById('productImage').src = product.images[0];
+            document.getElementById('productImage').alt = product.name;
+            document.title = `UCCMARKET - ${product.name}`;
+            
+            // Actualizar el nombre del producto
+            document.getElementById('productName').textContent = product.name;
+            
+            // Actualizar el precio
+            document.getElementById('productPrice').textContent = formatPrice(product.price);
+            
+            // Actualizar la descripción
+            document.getElementById('productDescription').innerHTML = `<p>${product.description}</p>`;
+            
+            // Crear las miniaturas
+            const thumbnailList = document.getElementById('thumbnailList');
+            product.images.forEach((imageUrl, index) => {
+                const thumbnail = document.createElement('div');
+                thumbnail.className = 'thumbnail';
+                thumbnail.innerHTML = `<img src="${imageUrl}" alt="${product.name} ${index + 1}">`;
+                thumbnail.onclick = () => {
+                    document.getElementById('productImage').src = imageUrl;
+                };
+                thumbnailList.appendChild(thumbnail);
+            });
+            
+            // Actualizar las especificaciones
+            const specsTable = document.getElementById('specsTable');
+            Object.entries(product.specs).forEach(([key, value]) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${key}</td>
+                    <td>${value}</td>
+                `;
+                specsTable.appendChild(row);
+            });
+            
+            // Configurar el botón de agregar al carrito
+            document.getElementById('addToCartButton').onclick = () => {
+                const quantity = parseInt(document.getElementById('quantity').value);
+                for (let i = 0; i < quantity; i++) {
+                    addToCart(productId, product.name, product.price, product.images[0]);
+                }
+            };
+        });
+        
+        // Funciones para el selector de cantidad
+        function incrementQuantity() {
+            const input = document.getElementById('quantity');
+            input.value = parseInt(input.value) + 1;
+        }
+        
+        function decrementQuantity() {
+            const input = document.getElementById('quantity');
+            const newValue = parseInt(input.value) - 1;
+            if (newValue >= 1) {
+                input.value = newValue;
+            }
+        }
+    </script>
+</body>
+</html>

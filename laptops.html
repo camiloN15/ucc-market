@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCCMARKET - Laptops</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="carrito.js" defer></script>
+    <script src="productos.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="Logo.png" alt="UCC MARKET" id="logo-img">
+                <span class="logo-text">UCCMARKET</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar productos...">
+                <button>Buscar</button>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Inicio</a>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">Productos</a>
+                    <div class="dropdown-content">
+                        <a href="laptops.html">Laptops</a>
+                        <a href="perifericos.html">Periféricos</a>
+                        <a href="monitores.html">Monitores</a>
+                    </div>
+                </div>
+                <a href="contacto.html">Contacto</a>
+                <span id="userStatus" class="user-status"></span>
+                <a href="login.html">Login</a>
+                <a href="carrito.html" class="cart-icon">🛒</a>
+            </div>
+        </nav>
+    </header>
+
+    <script>
+    (function(){
+        var statusEl = document.getElementById('userStatus');
+        var authLink = document.querySelector('.nav-links a[href="login.html"]');
+        try {
+            var user = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (statusEl) {
+                var text = user ? 'Sesión: ' + (user.name || user.email) : '';
+                statusEl.textContent = text;
+                if (user && user.isAdmin) {
+                    statusEl.style.cursor = 'pointer';
+                    statusEl.title = 'Ir al panel de administración';
+                    statusEl.addEventListener('click', function(){ window.location.href = 'admin.html'; });
+                }
+            }
+            if (authLink) {
+                if (user) {
+                    authLink.textContent = 'Salir';
+                    authLink.addEventListener('click', function(e){
+                        e.preventDefault();
+                        localStorage.removeItem('currentUser');
+                        window.location.href = 'login.html';
+                    });
+                } else {
+                    authLink.textContent = 'Login';
+                }
+            }
+        } catch(e) {}
+    })();
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      var container = document.querySelector('.category-section .product-grid');
+      if (!container) return;
+      var db = JSON.parse(localStorage.getItem('productosDB_v1')||'[]');
+      if (!db.length && typeof productos === 'object') {
+        try {
+          db = Object.entries(productos).map(function(pair){ var id=pair[0], p=pair[1]; return Object.assign({id:id}, p); });
+          localStorage.setItem('productosDB_v1', JSON.stringify(db));
+        } catch(e){}
+      }
+      var list = db.filter(function(p){ return (p.category||'') === 'laptops'; });
+      container.innerHTML = '';
+      list.forEach(function(p){
+        var card = document.createElement('div');
+        card.className = 'product-card';
+        var img = (p.images && p.images[0]) || '';
+        card.innerHTML = '<a href="producto.html?id='+p.id+'" class="product-link">'
+          + '<img src="'+img+'" alt="'+(p.name||'')+'">'
+          + '<h3>'+ (p.name||'') +'</h3>'
+          + '<p class="price">$ '+ Number(p.price||0).toLocaleString('es-CO') +'</p>'
+          + '</a>'
+          + '<button class="add-to-cart">🛒 Agregar al carrito</button>';
+        container.appendChild(card);
+        var btn = card.querySelector('.add-to-cart');
+        if (btn) btn.addEventListener('click', function(){
+          if (typeof addToCart === 'function') addToCart(p.id, p.name, p.price, img, 1);
+        });
+      });
+    });
+    </script>
+
+    <main>
+        <section class="category-section">
+            <h2>Laptops Gaming</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <a href="producto.html?id=laptop1" class="product-link">
+                        <img src="https://dlcdnwebimgs.asus.com/gain/480f0742-006b-49f5-b37b-be273dd6a2c0/" alt="ASUS ROG Gaming">
+                        <h3>ASUS ROG Strix G15</h3>
+                        <p class="description">AMD Ryzen 9, RTX 4060, 16GB RAM, 1TB SSD</p>
+                        <p class="price">$ 7.592.900</p>
+                    </a>
+                    <button onclick="addToCart('laptop1', 'ASUS ROG Strix G15', 7592900, this.parentElement.querySelector('img').src)" class="add-to-cart">🛒 Agregar al carrito</button>
+                </div>
+
+                <div class="product-card">
+                    <a href="producto.html?id=laptop2" class="product-link">
+                        <img src="https://megacomputer.com.co/wp-content/uploads/2023/04/PORTATIL-MSI-KATANA-15-B12UCXK.jpg.webp" alt="MSI Gaming">
+                        <h3>MSI Katana 15</h3>
+                        <p class="description">Intel Core i7, RTX 3060, 16GB RAM, 512GB SSD</p>
+                        <p class="price">$ 3.997.200</p>
+                    </a>
+                    <button onclick="addToCart('laptop2', 'MSI Katana 15', 3997200, this.parentElement.querySelector('img').src)" class="add-to-cart">🛒 Agregar al carrito</button>
+                </div>
+
+                <div class="product-card">
+                    <a href="producto.html?id=laptop3" class="product-link">
+                        <img src="https://p3-ofp.static.pub//fes/cms/2024/09/12/m1jnssoporjtlmma8zqy3ssoour2yj992790.png" alt="Lenovo Legion">
+                        <h3>Lenovo Legion 5</h3>
+                        <p class="description">AMD Ryzen 7, RTX 3070, 32GB RAM, 1TB SSD</p>
+                        <p class="price">$ 4.590.000</p>
+                    </a>
+                    <button onclick="addToCart('laptop3', 'Lenovo Legion 5', 4590000, this.parentElement.querySelector('img').src)" class="add-to-cart">🛒 Agregar al carrito</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Acerca de nosotros</h3>
+                <p>Tu tienda de confianza en tecnología y gaming</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul>
+                    <li><a href="#ayuda">Ayuda</a></li>
+                    <li><a href="#envios">Envíos</a></li>
+                    <li><a href="#devoluciones">Devoluciones</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>Email: info@uccmarket.com</p>
+                <p>Teléfono: (123) 456-7890</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 UCCMARKET. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
